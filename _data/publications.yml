@@ -1,34 +1,12 @@
 main:
 
+  - title: "JournalAIde: Empowering Older Adults in Digital Journal Writing"
+    authors: Shixu Zhou, Weiyue Lin, Zuyu Xu, Xiaoying Wei, <strong>Raoyi Huang</strong>, Xiaojuan Ma, Mingming Fan
+    conference: ACM CHI Conference on Human Factors in Computing Systems <strong>(CHI)</strong>, 2025.
+    pdf: https://dl.acm.org/doi/10.1145/3706598.3713339
 
-  # - title: Measuring Adversarial Datasets
-  #   authors: Yuanchen Bai*,  <strong>Raoyi Huang*</strong>, Vijay Viswanathan, Tzu-Sheng Kuo, Tongshuang Wu
-  #   conference: IJCNLP-AACL, 2023
-  #   pdf: https://ryhcathy.github.io/
-  #   code: https://ryhcathy.github.io/
-  #   notes: Early Accept
-    # bibtex: https://bib.yliu.me/MICCAI23.txt
-    # image: ./assets/img/teaser_example_2.png
-    # others: Some brief explaination about the projects
-
-  # - title: Continual Learning for Abdominal Multi-Organ and Tumor Segmentation
-  #   authors: Yixiao Zhang, Xinyi Li, Huimiao Chen, Alan Yuille, <strong>Yaoyao Liu*</strong>, Zongwei Zhou* (*Corresponding authors)
-  #   conference_short: MICCAI
-  #   conference: International Conference on Medical Image Computing and Computer-Assisted Intervention <strong>(MICCAI)</strong>, 2023.
-  #   pdf: https://arxiv.org/pdf/2306.00988.pdf
-  #   code: https://github.com/MrGiovanni/ContinualLearning
-  #   bibtex: https://bib.yliu.me/MICCAI23.txt
-  #   image: ./assets/img/teaser_example_2.png
-  #   notes: Early Accept
-  #   others: Some brief explaination about the projects
-
-  # - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
-  #   authors: <strong>Yaoyao Liu</strong>, Yuting Su, An-An Liu, Bernt Schiele, Qianru Sun
-  #   conference_short: CVPR
-  #   conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2020.
-  #   pdf: https://arxiv.org/pdf/2002.10211.pdf
-  #   code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-  #   page: https://class-il.mpi-inf.mpg.de/mnemonics/
-  #   bibtex: https://class-il.mpi-inf.mpg.de/mnemonics/
-  #   notes: Oral Presentation
-  #   image: ./assets/img/teaser_example.png
+  - title: Measuring Adversarial Datasets
+    authors: Yuanchen Bai*, <strong>Raoyi Huang*</strong>, Vijay Viswanathan, Tzu-Sheng Kuo, Tongshuang Wu
+    conference: ART of Safety Workshop @ AACL-IJCNLP, 2023.
+    pdf: https://aclanthology.org/2023.artofsafety-1.4/
+    notes: Co-first author

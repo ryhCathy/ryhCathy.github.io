@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cathy Huang — Exploring Personal AI</title>
+<meta name="description" content="Cathy Huang. Solutions Architect at AWS. Exploring Personal AI, AI-native products, and AI hardware — the future form of an AI that truly knows you.">
+<link rel="canonical" href="https://ryhcathy.github.io/">
+<link rel="alternate" hreflang="en" href="https://ryhcathy.github.io/?lang=en">
+<link rel="alternate" hreflang="zh" href="https://ryhcathy.github.io/?lang=zh">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cathy Huang — Exploring Personal AI">
+<meta property="og:description" content="Solutions Architect at AWS. Exploring Personal AI, AI-native products, and AI hardware.">
+<meta property="og:image" content="https://ryhcathy.github.io/assets/img/avatar_en.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" as="image" href="assets/img/avatar_en.jpg">
+<link rel="stylesheet" href="assets/css/card.css">
+</head>
+
+<body>
+<!-- Language switch. Both versions are one document: every [data-en]/[data-zh]
+     node swaps text, and the avatar video swaps source with it. -->
+<nav class="topbar">
+  <a class="mark" href="#top" aria-label="Cathy Huang">CH</a>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+    <span class="sep">/</span>
+    <button type="button" data-set-lang="zh" aria-pressed="false">中文</button>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-grid">
+
+      <!-- The avatar is the visual centre: her AI double gives the first
+           self-introduction. Poster = frame 0 of the same clip, so pressing
+           play looks like the still simply comes alive. -->
+      <figure class="avatar" id="avatar">
+        <video id="clip"
+               poster="assets/img/avatar_en.jpg"
+               preload="metadata"
+               playsinline
+               data-src-en="assets/video/cathy_en.mp4"
+               data-src-zh="assets/video/cathy_zh.mp4">
+          <source src="assets/video/cathy_en.mp4" type="video/mp4">
+        </video>
+
+        <!-- The label lives in its own span: the language switch rewrites
+             textContent, which would otherwise wipe out the icon. -->
+        <button class="play" id="play" type="button" aria-label="Play introduction">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+          <span class="play-label" data-en="Play introduction" data-zh="播放自我介绍"></span>
+        </button>
+
+        <figcaption class="avatar-note">
+          <span data-en="AI avatar · my voice, cloned"
+                data-zh="AI 数字分身 · 我的克隆声音"></span>
+        </figcaption>
+
+        <!-- Shown while playing: the clip is unmuted, but a muted device isn't. -->
+        <div class="sound-hint" id="soundHint" role="status" aria-live="polite">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h3l4-3.5v13L7 15H4zm11.5-1.6a5 5 0 010 9.2m2.4-11.8a8 8 0 010 14.4"/></svg>
+          <span data-en="Sound on for the full introduction"
+                data-zh="记得打开声音，听听我的声音"></span>
+        </div>
+      </figure>
+
+      <div class="hero-copy">
+        <p class="eyebrow"
+           data-en="Personal AI · AI Native · AI Hardware"
+           data-zh="Personal AI · AI 原生产品 · AI 硬件"></p>
+
+        <h1 data-en="I'm exploring what Personal AI becomes."
+            data-zh="我在探索 Personal AI 的下一种形态。"></h1>
+
+        <p class="lede"
+           data-en="An AI that actually knows you — not another chat window. I'm Cathy: by day a Solutions Architect at AWS taking AI systems to production scale, and in my own time a builder chasing that question through products, agents, and hardware."
+           data-zh="一个真正懂你的 AI，而不是又一个聊天窗口。我是 Cathy —— 白天在 AWS 做解决方案架构师，把 AI 系统推上生产规模；其余时间，我用产品、Agent 和硬件去回答这个问题。"></p>
+
+        <div class="cta">
+          <a class="btn primary" href="mailto:raoyih@amazon.com"
+             data-en="Let's build something" data-zh="聊聊合作"></a>
+          <a class="btn ghost" href="#explore"
+             data-en="What I'm exploring" data-zh="我正在探索什么"></a>
+        </div>
+
+        <p class="signal">
+          <span data-en="Currently at" data-zh="现任"></span>
+          <strong>Amazon Web Services</strong>
+          <span class="dot">·</span>
+          <span data-en="Solutions Architect, Automotive &amp; GenAI"
+                data-zh="解决方案架构师，汽车 &amp; 生成式 AI"></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The three directions (the point of the whole page) ─────────────── -->
+  <section id="explore" class="explore">
+    <header class="sec-head">
+      <p class="kicker" data-en="Where I'm heading" data-zh="我要去的方向"></p>
+      <h2 data-en="Three questions I keep coming back to"
+          data-zh="三个我一直在想的问题"></h2>
+    </header>
+
+    <div class="cards">
+      <article class="card">
+        <span class="num">01</span>
+        <h3 data-en="Personal AI" data-zh="Personal AI"></h3>
+        <p data-en="What does it take for an AI to hold your context for years — your taste, your history, your intent — and stay yours? Memory, privacy, and ownership are the hard parts, not the model."
+           data-zh="一个 AI 要如何长年持有你的上下文 —— 你的偏好、你的经历、你的意图 —— 并且始终属于你？难点从来不是模型，而是记忆、隐私和归属权。"></p>
+      </article>
+
+      <article class="card">
+        <span class="num">02</span>
+        <h3 data-en="AI Native Products" data-zh="AI 原生产品"></h3>
+        <p data-en="Products designed from the model outward instead of AI bolted onto old flows. When generation is cheap and reasoning is a primitive, the interface, the pricing, and the unit of work all change shape."
+           data-zh="从模型出发去设计产品，而不是把 AI 塞进旧流程。当生成变得廉价、推理成为基础能力，交互方式、定价逻辑和工作的最小单元都会改变形状。"></p>
+      </article>
+
+      <article class="card">
+        <span class="num">03</span>
+        <h3 data-en="AI Hardware" data-zh="AI 硬件"></h3>
+        <p data-en="Personal AI has to live somewhere. Which device earns a place in your day — what it senses, what it never sends to the cloud, and how it feels to carry."
+           data-zh="Personal AI 总要有一个载体。什么样的设备值得进入你的日常 —— 它感知什么、什么永远不上云、以及戴在身上是什么感觉。"></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Proof that ideas ship: the page demos its own build ────────────── -->
+  <section class="build">
+    <div class="build-grid">
+      <div class="build-copy">
+        <p class="kicker" data-en="Built, not sketched" data-zh="不是设想，是做出来的"></p>
+        <h2 data-en="The avatar above is my own pipeline."
+            data-zh="上面那个数字分身，是我自己搭的。"></h2>
+        <p data-en="Text goes in, a talking-head video comes out in my cloned voice — voice cloning, a diffusion talking-head model, and denoising, running on a GPU cluster I provision on demand and tear down when it's idle. One command, about fifteen minutes, roughly a dollar."
+           data-zh="输入一段文本，输出一条用我克隆声音说话的视频 —— 声音克隆、扩散式口播模型、降噪，跑在我自己按需拉起、空闲即回收的 GPU 集群上。一条命令，约十五分钟，成本大约一美元。"></p>
+        <p class="fine" data-en="That's the pattern I care about: an idea is only interesting once it runs."
+           data-zh="这就是我在意的事：一个想法，只有跑起来才算有意思。"></p>
+      </div>
+
+      <ul class="stack">
+        <li><span data-en="Voice" data-zh="声音"></span><strong>CosyVoice 3 · zero-shot clone</strong></li>
+        <li><span data-en="Avatar" data-zh="口播"></span><strong>SoulX-FlashTalk 14B</strong></li>
+        <li><span data-en="Compute" data-zh="算力"></span><strong>EKS · Karpenter · on-demand GPU</strong></li>
+        <li><span data-en="Storage" data-zh="存储"></span><strong>EFS · shared model cache</strong></li>
+        <li><span data-en="Entry point" data-zh="入口"></span><strong><code>./make_video.sh "…"</code></strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Credibility: present, but deliberately not the headline ────────── -->
+  <section class="credibility">
+    <header class="sec-head">
+      <p class="kicker" data-en="Track record" data-zh="背景"></p>
+      <h2 data-en="Why I can actually ship this"
+          data-zh="为什么这些我做得出来"></h2>
+      <p class="sec-sub"
+         data-en="My day job puts me at the frontier of AI infrastructure — that's exactly what makes the personal work possible."
+         data-zh="本职工作让我长期待在 AI 基础设施的前沿 —— 也正因为如此，个人探索才有落地的能力。"></p>
+    </header>
+
+    <div class="cred-grid">
+      <div class="cred-block">
+        <h3 data-en="Now" data-zh="现在"></h3>
+        <p class="role">Solutions Architect · Amazon Web Services</p>
+        <p data-en="Automotive &amp; GenAI. I take AI workloads from proof of concept to production: sizing and autoscaling GPU clusters, tuning LLM serving (vLLM · SGLang · TensorRT-LLM · KV cache), ADAS data loops, and agentic AI platforms for OEMs, Tier-1s, and ISVs."
+           data-zh="汽车与生成式 AI 方向。把 AI 负载从 PoC 推到生产：GPU 集群选型与弹性伸缩、LLM 推理优化（vLLM · SGLang · TensorRT-LLM · KV cache）、ADAS 数据闭环，以及面向主机厂、Tier-1 和 ISV 的 Agentic AI 平台。"></p>
+      </div>
+
+      <div class="cred-block">
+        <h3 data-en="Before" data-zh="此前"></h3>
+        <p class="role">Carnegie Mellon University</p>
+        <p data-en="M.S. Information Systems Management, Highest Distinction."
+           data-zh="信息系统管理硕士，最高荣誉（Highest Distinction）。"></p>
+        <p class="role">The Hong Kong Polytechnic University</p>
+        <p data-en="B.Sc. Computing, First-Class Honours. Exchanges at NUS and the University of Cambridge."
+           data-zh="计算学理学士，一级荣誉。曾赴新加坡国立大学与剑桥大学交换。"></p>
+      </div>
+
+      <div class="cred-block">
+        <h3 data-en="Research" data-zh="研究"></h3>
+        <ul class="pubs">
+          <li>
+            <a href="https://dl.acm.org/doi/10.1145/3706598.3713339" target="_blank" rel="noopener">JournalAIde: Empowering Older Adults in Digital Journal Writing</a>
+            <span class="venue">ACM CHI 2025</span>
+          </li>
+          <li>
+            <a href="https://aclanthology.org/2023.artofsafety-1.4/" target="_blank" rel="noopener">Measuring Adversarial Datasets</a>
+            <span class="venue">ART of Safety @ AACL-IJCNLP 2023 · <span data-en="co-first author" data-zh="共同第一作者"></span></span>
+          </li>
+        </ul>
+        <!-- Carried over from the previous site so the CV stays reachable. -->
+        <p class="cv">
+          <a href="assets/files/curriculum_vitae.pdf" target="_blank" rel="noopener"
+             data-en="Full CV (PDF)" data-zh="完整履历（PDF）"></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────────────────────────── -->
+  <section class="contact">
+    <h2 data-en="Come find me if you're working on…"
+        data-zh="如果你在做这些，来找我聊"></h2>
+    <ul class="tags">
+      <li data-en="Personal AI" data-zh="Personal AI"></li>
+      <li data-en="AI-native products" data-zh="AI 原生产品"></li>
+      <li data-en="AI agents" data-zh="AI Agent"></li>
+      <li data-en="AI hardware" data-zh="AI 硬件"></li>
+      <li data-en="GPU infrastructure" data-zh="GPU 基础设施"></li>
+    </ul>
+    <a class="btn primary big" href="mailto:raoyih@amazon.com">raoyih@amazon.com</a>
+    <p class="fine" data-en="Ideas welcome, half-formed ones especially."
+       data-zh="想法欢迎，尤其是还没想清楚的那种。"></p>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Cathy Huang</span>
+  <span class="fine" data-en="Opinions my own." data-zh="观点仅代表个人。"></span>
+</footer>
+
+<script src="assets/js/card.js"></script>
+</body>
+</html>

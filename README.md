@@ -1,187 +1,96 @@
-# The Minimal Light Theme
+# ryhcathy.github.io
 
-[![LICENSE](https://img.shields.io/github/license/yaoyao-liu/minimal-light?style=flat-square&logo=creative-commons&color=EF9421)](https://github.com/yaoyao-liu/minimal-light/blob/main/LICENSE)
+An AI-era digital identity card. One static page, no build step, no Jekyll —
+GitHub Pages serves `index.html` directly.
 
-\[[Demo the theme](https://minimal-light-theme.yliu.me/)\]  \[[简体中文](https://github.com/yaoyao-liu/minimal-light/blob/master/README_zh_Hans.md) | [繁體中文](https://github.com/yaoyao-liu/minimal-light/blob/master/README_zh_Hant.md) | [Deutsche](https://github.com/yaoyao-liu/minimal-light/blob/master/README_de.md)\]
- 
-*This is the source code of my homepage. I build this website based on [minimal](https://github.com/orderedlist/minimal).*
-<br>
-*Feel free to use and share the source code anywhere you like.*
+## Deploy
 
-The latest version of my homepage is available here: [[link](https://github.com/yaoyao-liu/yaoyao-liu.github.io)]
-<br>
-A template for Max Planck Institute for Informatics is available here: [[link](https://github.com/yaoyao-liu/minimal-light-theme-mpi-inf)]
-
-## Features
-
-- Simple and elegant personal homepage theme
-- Jekyll theme, automatically deployed by GitHub Pages
-- Basic search engine optimization
-- Mobile friendly
-- Supporting Markdown 
-- Supporting dark mode
-
-## Project Architecture
-
-```
-.
-├── _data                    
-|   └── publications.yml                      # the YAML file for publications
-├── _includes                    
-|   ├── publications.md                       # the Markdown file for publications
-|   └── services.md                           # the Markdown file for services
-├── _layouts                  
-|   └── homepage.html                         #  the html template for the homepage 
-├── _sass
-|   ├── minimal-light.scss                    #  this file will be compiled into a CSS file to control the style of the page              
-|   └── minimal-light-no-dark-mode.scss       #  this file is similar to minimal-light.scss with the dark mode disabled
-├── assets                                    #  some files
-├── html_source_file                          #  compiled HTML files
-├── .gitignore                                #  this file specifies intentionally untracked files that Git should ignore
-├── CNAME                                     #  the custom domain, will be used by GitHub page sevice
-├── Gemfile                                   #  a RubyGems related file
-├── LICENSE                                   #  the license file
-├── README.md                                 #  the readme file (English)
-├── README_de.md                              #  the readme file (German)
-├── README_zh_Hans.md                         #  the readme file (Simplified Chinese)
-├── README_zh_Hant.md                         #  the readme file (Traditional Chinese)
-├── _config.yml                               #  the Jekyll configuration file, including some options of the page  
-└── index.md                                  #  the content of the index page, using Markdown
-```
-
-## Getting Started
-
-This template can be used in the following two ways: 
-- **Using with the GitHub Pages Service.** GitHub will provide you with a server to generate and host web pages.
-- **Using locally with Jekyll.** You may install Jekyll on your own computer and generate static web pages (i.e., HTML files) with this template. After that, you may upload the HTML files to your server.
-
-The detailed instructions are available below.
-
-
-### Using with the GitHub Pages Service
-
-There are two ways to use this template on GitHub:
-
-#### Fork this repository
-- Fork this repository (or [use this repository as a template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)) and change the name to `your-username.github.io`.
-
-- Enable the GitHub pages for that repository following the steps [here](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site).
-
-#### Using this repository as a remote theme
-To use this theme, add the following to your repository's `_config.yml`:
-
-```yaml
-remote_theme: yaoyao-liu/minimal-light
-```
-
-Please note that adding the above line will directly apply all the default settings in this repository to yours.
-
-If you hope to edit any files (e.g., `index.md`), you still need to copy them to your repository.
-
-### Using Locally with Jekyll
-
-First, install [Ruby](https://www.ruby-lang.org/en/) and [Jekyll](https://jekyllrb.com/). The install instructions can be found here: <https://jekyllrb.com/docs/installation/#guides>
-
-Then, clone this repository:
+The redesign sits on top of the previous history as an ordinary commit, so
+nothing was force-pushed and the old site stays in the log. It's also kept on
+the `old-jekyll-site` branch and the `pre-redesign` tag.
 
 ```bash
-git clone https://github.com/yaoyao-liu/minimal-light.git
-cd minimal-light
+git push origin main
 ```
-Install and run:
+
+Pages redeploys in about a minute. `.nojekyll` stops GitHub from trying to build
+it as a Jekyll project — without it, Pages would look for `_config.yml` and the
+theme that used to be here.
+
+To roll back:
 
 ```bash
-bundle install
-bundle add webrick
-bundle exec jekyll server
+git revert <redesign-commit>       # or: git reset --hard pre-redesign && git push --force
 ```
-View the live page using `localhost`:
-<http://localhost:4000>. You can get the HTML files in `_site` folder.
 
-### Using the HTML version
+Carried over from the Jekyll site: `CNAME` (currently empty — no custom
+domain), `LICENSE`, `assets/files/curriculum_vitae.pdf`, the favicons, and the
+old `assets/img/avatar.jpg`. The Jekyll machinery (`_config.yml`, `_sass/`,
+`_layouts/`, `_data/`, `Gemfile`, theme READMEs) was removed.
 
-The compiled HTML files are available in the `html_source_file` folder. If you don't like Jekyll, you may directly edit and use the HTML version.
+To preview locally first:
 
-## Customizing
+```bash
+python3 -m http.server 8901   # then open http://127.0.0.1:8901/
+```
 
-### Configuration variables
+## What's here
 
-The Minimal Light theme will respect the following variables, if set in your site's `_config.yml`:
+```
+index.html            the whole page; every translatable node carries data-en + data-zh
+assets/css/card.css   dark by default, light via prefers-color-scheme
+assets/js/card.js     language switch + avatar playback
+assets/img/avatar_{zh,en}.jpg   poster stills
+assets/video/cathy_{zh,en}.mp4  the avatar clips
+```
 
-  ```yaml
-# Basic Information 
-title: Your Name
-position: Ph.D. Student
-affiliation: Your Affiliation
-email: yourname (at) example.edu
+## Language
 
-# Search Engine Optimization (SEO)
-# The following information is used to improve the website traffic from search engines, e.g., Google.
-keywords: minimal light
-description: The Minimal Light is a simple and elegant jekyll theme for academic personal homepage.
-canonical: https://minimal-light-theme.yliu.me/
+Both languages live in one document. `applyLang()` rewrites `textContent` for
+every `[data-en]` / `[data-zh]` node and points the video at the matching clip,
+so the Chinese page plays the Chinese introduction and the English page the
+English one. The choice persists in `localStorage`; `?lang=zh` or `?lang=en`
+forces it, otherwise it follows the browser.
 
-# Links 
-# If you don't need one of them, you may delete the corresponding line.
-google_scholar: https://scholar.google.com/
-cv_link: assets/files/curriculum_vitae.pdf
-github_link: https://github.com/
-linkedin: https://www.linkedin.com/
-twitter: https://twitter.com/
+Adding copy means adding **both** attributes — a node with only one will go
+blank in the other language. To check:
 
-# Images (e.g., your profile picture and your website's favicon) 
-# "favicon" and "favicon_dark" are used for the light and dark modes, respectively. 
-avatar: ./assets/img/avatar.png
-favicon: ./assets/img/favicon.png
-favicon_dark: ./assets/img/favicon-dark.png
+```bash
+grep -o '<[^>]*data-\(en\|zh\)="[^"]*"[^>]*>' index.html |
+  grep -v 'data-en=.*data-zh=\|data-zh=.*data-en='
+```
 
-# Footnote
-# You may use the option to disable the footnote, "Powered by Jekyll and Minimal Light theme."
-enable_footnote: true
+## The avatar
 
-# Auto Dark Mode
-# You may use the option to disable the automatic dark theme
-auto_dark_mode: true
+The clips come from the pipeline in `../zk-avatar` (`./make_video.sh`), which
+records the recipe in `RECIPE.md`. Source files are
+`outputs/cathy-card/v3_{zh,en}_raw.mp4`, re-encoded here with `-movflags
++faststart` so playback can begin before the file finishes buffering.
 
-# Font
-# You can use this option to choose between Serif or Sans Serif fonts.
-font: "Serif" # or "Sans Serif"
+Two details worth knowing before regenerating them:
 
-# Google Analytics ID
-# Please remove this if you don't use Google Analytics
-google_analytics: UA-111540567-4
-  ```
-### Edit `index.md`
+**The poster is not frame 0.** For the English clip frame 0 lands mid-syllable —
+eyes shut, mouth open. The posters are hand-picked stills (eyes open, mouth
+closed): zh at 3.20s, en at 7.20s. Playback still starts at 0 so the
+introduction isn't clipped, and `.starting` cross-fades the handover so the
+jump from poster to frame 0 doesn't read as a glitch.
 
-Create `index.md` and add your personal information. It supports **Markdown** and **HTML** syntax.
+To reselect after regenerating, sample the clip and score frames on eye
+contrast over mouth contrast — a closed mouth is smooth, open eyes give dark
+pupils against sclera:
 
-### Edit included files
+```bash
+ffmpeg -i v3_en_raw.mp4 -vf "fps=5,scale=224:384" /tmp/cand/en_%03d.png
+# then pick the frame maximising eye_std / mouth_std, and cut it at (N-1)/5 s
+ffmpeg -ss 7.20 -i v3_en_raw.mp4 -vframes 1 -q:v 2 assets/img/avatar_en.jpg
+```
 
-There are two markdown files included in `index.md`. They are `_includes/publications.md` and `_includes/service.md`, respectively. These two files also support **Markdown** and **HTML** syntax. If you don't hope to include these two files, you may remove the following lines in `index.md`:
-https://github.com/yaoyao-liu/minimal-light/blob/b38070cd0b6bce45d8a885f3828549af8f82b7cb/index.md?plain=1#L21-L23
+**Audio is the point, so it never autoplays.** Browsers only allow unmuted
+playback after a real gesture, and a muted digital avatar is pointless — the
+whole thing is her cloned voice. So it waits for a click, plays unmuted, and
+shows the sound reminder for ~4s before retiring it so the badge doesn't sit on
+her face for the whole clip.
 
-If you hope to edit the publication list without changing the format, you may edit `_data/publications.yml`:
-https://github.com/yaoyao-liu/minimal-light/blob/77b1b3b31d4561091bcd739f37a2e1880e8b5ca5/_data/publications.yml#L3-L11
-
-
-### Stylesheet
-
-If you'd like to add your own custom styles, you may edit `_sass/minimal-light.scss`.
-
-### Layouts
-
-If you'd like to change the theme's HTML layout, you may edit `_layout/homepage.html`.
-
-## License
-
-This work is licensed under a [Creative Commons Zero v1.0 Universal](https://github.com/yaoyao-liu/minimal-light/blob/master/LICENSE) License.
-
-## Acknowledgements
-
-Our project uses the source code from the following repositories:
-
-* [pages-themes/minimal](https://github.com/pages-themes/minimal)
-
-* [orderedlist/minimal](https://github.com/orderedlist/minimal)
-
-* [al-folio](https://github.com/alshedivat/al-folio)
+The play button keeps its label in a separate `<span class="play-label">`
+because the language switch writes `textContent` — putting the label on the
+button itself would delete the SVG icon.

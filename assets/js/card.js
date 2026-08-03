@@ -1,157 +1,179 @@
-/* Language switching + the avatar video interaction.
-   No build step, no framework — this is a single static page on GitHub Pages. */
+/* ═══════════════════════════════════════════════════════════════════════════
+   Three jobs: language switching, the AI-twin video, and the Save Contact sheet.
+   No framework — the whole page is one screen of content, and a dependency
+   would cost more than it saves.
+   ═════════════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  var video     = document.getElementById('clip');
-  var figure    = document.getElementById('avatar');
-  var playBtn   = document.getElementById('play');
-  var soundHint = document.getElementById('soundHint');
+  var DUR = { en: '0:14', zh: '0:11' };   // real ffprobe durations: 13.56s / 11.24s
 
-  /* ── Language ─────────────────────────────────────────────────────────
-     Every translatable node carries data-en and data-zh. Swapping means
-     rewriting textContent, plus pointing the video at the matching clip. */
-  var STORE = 'cathy-lang';
+  var frame  = document.querySelector('.twin-frame');
+  var video  = document.querySelector('.twin-video');
+  var play   = document.querySelector('.twin-play');
+  var sound  = document.querySelector('.twin-sound');
+  var langBtns = Array.prototype.slice.call(document.querySelectorAll('.lang-btn'));
 
-  var LABEL = {
-    en: { title: 'Cathy Huang — Exploring Personal AI',  play: 'Play introduction' },
-    zh: { title: 'Cathy Huang — 探索 Personal AI 的未来', play: '播放自我介绍' }
-  };
+  var lang = 'en';
+  var soundTimer = null;
 
-  /* The poster is a hand-picked still (eyes open, mouth closed) rather than
-     frame 0, which for the English clip lands mid-syllable. Playback still
-     starts at 0 so the introduction is never clipped; .playing cross-fades the
-     video in so that jump from poster to frame 0 isn't a hard cut. */
+  /* ── Language ─────────────────────────────────────────────────────────── */
+  function applyLang(next) {
+    lang = next;
+    document.documentElement.lang = (next === 'zh') ? 'zh-CN' : 'en';
 
-  function applyLang(lang) {
-    if (lang !== 'zh') { lang = 'en'; }
+    document.querySelectorAll('[data-' + next + ']').forEach(function (el) {
+      var v = el.getAttribute('data-' + next);
+      if (v !== null) el.textContent = v;
+    });
+    // aria-label can't be set from textContent, so translated labels carry their
+    // own attribute pair.
+    document.querySelectorAll('[data-label-' + next + ']').forEach(function (el) {
+      el.setAttribute('aria-label', el.getAttribute('data-label-' + next));
+    });
 
-    document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
-    document.documentElement.setAttribute('data-lang', lang);
-    document.title = LABEL[lang].title;
+    langBtns.forEach(function (b) {
+      var on = b.dataset.lang === next;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
 
-    var nodes = document.querySelectorAll('[data-' + lang + ']');
-    for (var i = 0; i < nodes.length; i++) {
-      nodes[i].textContent = nodes[i].getAttribute('data-' + lang);
-    }
-
-    var buttons = document.querySelectorAll('[data-set-lang]');
-    for (var j = 0; j < buttons.length; j++) {
-      buttons[j].setAttribute('aria-pressed',
-        String(buttons[j].getAttribute('data-set-lang') === lang));
-    }
-
-    playBtn.setAttribute('aria-label', LABEL[lang].play);
-    swapClip(lang);
-
-    try { localStorage.setItem(STORE, lang); } catch (e) { /* private mode */ }
-  }
-
-  /* The zh page plays the zh clip, the en page the en one. Reload the source
-     only when it actually changes, so switching mid-playback isn't jarring. */
-  function swapClip(lang) {
-    var next   = video.getAttribute('data-src-' + lang);
-    var poster = 'assets/img/avatar_' + lang + '.jpg';
-    if (!next || video.getAttribute('src') === next) { return; }
-
-    var wasPlaying = !video.paused && !video.ended;
-    video.pause();
-    video.removeAttribute('src');
-    // A leftover <source> child would win over the src attribute below.
-    while (video.firstChild) { video.removeChild(video.firstChild); }
-    video.setAttribute('src', next);
-    video.poster = poster;
-    video.load();
-
-    if (wasPlaying) {
-      start();
-    } else {
+    // Swap the clip. Keep it stopped: switching language is not a request to
+    // play, so this resets to the poster rather than autoplaying.
+    if (video) {
       stop();
+      video.src = video.getAttribute('data-src-' + next) || '';
     }
+
+    try { localStorage.setItem('lang', next); } catch (e) {}
+
+    var url = new URL(window.location.href);
+    url.searchParams.set('lang', next);
+    history.replaceState(null, '', url);
   }
 
-  /* Initial language: ?lang= wins, then a previous choice, then the browser. */
-  function initialLang() {
-    var q = /[?&]lang=(zh|en)/.exec(location.search);
-    if (q) { return q[1]; }
-    try {
-      var saved = localStorage.getItem(STORE);
-      if (saved === 'zh' || saved === 'en') { return saved; }
-    } catch (e) { /* ignore */ }
-    return /^zh\b/i.test(navigator.language || '') ? 'zh' : 'en';
-  }
-
-  document.addEventListener('click', function (ev) {
-    var btn = ev.target.closest ? ev.target.closest('[data-set-lang]') : null;
-    if (btn) { applyLang(btn.getAttribute('data-set-lang')); }
+  langBtns.forEach(function (b) {
+    b.addEventListener('click', function () { applyLang(b.dataset.lang); });
   });
 
-  /* ── Playback ─────────────────────────────────────────────────────────
-     Poster frame is frame 0 of the clip, so play looks like the still coming
-     alive. Audio is the whole point of the introduction, so this never
-     autoplays and never starts muted — it needs a real click. */
-  function start() {
-    figure.classList.add('starting');     // fade down before the frame swap
-    var p = video.play();
-    if (p && p.catch) {
-      p.catch(function () {               // blocked; leave the poster up
-        figure.classList.remove('starting');
-        stop();
-      });
-    }
-  }
-
+  /* ── Video ────────────────────────────────────────────────────────────── */
   function stop() {
-    figure.classList.remove('playing', 'starting');
-    soundHint.classList.remove('show');
+    if (!video) return;
+    try { video.pause(); video.currentTime = 0; } catch (e) {}
+    frame.classList.remove('is-playing');
+    if (sound) sound.hidden = true;
+    if (soundTimer) { clearTimeout(soundTimer); soundTimer = null; }
   }
 
-  playBtn.addEventListener('click', function () {
-    if (video.paused || video.ended) { start(); } else { video.pause(); }
-  });
+  function start() {
+    if (!video) return;
+    // preload="none", so the src may not be attached until the first tap.
+    if (!video.src) video.src = video.getAttribute('data-src-' + lang) || '';
 
-  // Clicking the frame while it plays pauses it, which is what people expect.
-  video.addEventListener('click', function () {
-    if (!video.paused && !video.ended) { video.pause(); }
-  });
+    // Unmuted by default: her cloned voice is the point of the clip. If a
+    // browser blocks unmuted playback, fall back to muted and say so, rather
+    // than showing a control that silently does nothing.
+    video.muted = false;
+    frame.classList.add('is-playing');
 
-  video.addEventListener('play', function () {
-    video.muted = false;                 // the introduction is the audio
-    figure.classList.add('playing');
-    // Frames are flowing now, so bring it back up.
-    requestAnimationFrame(function () { figure.classList.remove('starting'); });
-    // Remind about sound only once playback is really under way, then let the
-    // reminder retire so it doesn't sit on top of her face for the whole clip.
-    soundHint.classList.add('show');
-    setTimeout(function () { soundHint.classList.remove('show'); }, 4200);
-  });
-
-  video.addEventListener('pause', stop);
-
-  /* Reload rather than seeking to 0: that restores the chosen poster still
-     instead of leaving frame 0 (mid-syllable in English) on screen. */
-  video.addEventListener('ended', function () {
-    stop();
-    video.load();
-  });
-
-  /* ── Reveal on scroll ───────────────────────────────────────────────── */
-  var targets = document.querySelectorAll(
-    '.explore, .build-grid, .cred-block, .contact');
-
-  if ('IntersectionObserver' in window) {
-    for (var k = 0; k < targets.length; k++) { targets[k].classList.add('reveal'); }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
+    var p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function () {
+        video.muted = true;
+        video.play().catch(function () { stop(); });
       });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    for (var m = 0; m < targets.length; m++) { io.observe(targets[m]); }
+    }
+
+    if (sound) {
+      sound.hidden = false;
+      soundTimer = setTimeout(function () { sound.hidden = true; }, 4200);
+    }
   }
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-  applyLang(initialLang());
+  if (play) {
+    play.addEventListener('click', function () {
+      if (frame.classList.contains('is-playing')) { stop(); } else { start(); }
+    });
+  }
+
+  // Tapping the frame while playing stops it — the pill is hidden by then.
+  if (frame) {
+    frame.addEventListener('click', function (e) {
+      if (e.target.closest('.twin-play')) return;
+      if (frame.classList.contains('is-playing')) stop();
+    });
+  }
+
+  if (video) {
+    video.addEventListener('ended', stop);
+    // A clip that fails to load should not leave the page showing a stuck
+    // "playing" state over a blank box.
+    video.addEventListener('error', stop);
+  }
+
+  /* ── Save Contact sheet ───────────────────────────────────────────────────
+     `hidden` in the markup, so the state is right with JS off and before this
+     runs — never a flash of an open dialog. Both Save Contact buttons open it. */
+  var sheet = document.getElementById('sheet');
+  var lastFocus = null;
+
+  function openSheet() {
+    if (!sheet) return;
+    lastFocus = document.activeElement;
+    sheet.hidden = false;
+    document.body.style.overflow = 'hidden';
+    var x = sheet.querySelector('.sheet-x');
+    if (x) x.focus();
+  }
+
+  function closeSheet() {
+    if (!sheet || sheet.hidden) return;
+    sheet.hidden = true;
+    document.body.style.overflow = '';
+    // Send focus back where it came from, or a keyboard user is stranded at the
+    // top of the document.
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('.save-open').forEach(function (b) {
+    b.addEventListener('click', openSheet);
+  });
+
+  if (sheet) {
+    sheet.querySelectorAll('[data-close]').forEach(function (el) {
+      el.addEventListener('click', closeSheet);
+    });
+    // Downloading is the end of the task, so the sheet gets out of the way.
+    var dl = sheet.querySelector('.sheet-dl');
+    if (dl) dl.addEventListener('click', function () { setTimeout(closeSheet, 400); });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (!sheet || sheet.hidden) return;
+    if (e.key === 'Escape') { closeSheet(); return; }
+    // Keep Tab inside the open sheet: it is modal, and letting focus escape into
+    // the page behind it is the usual way these break.
+    if (e.key !== 'Tab') return;
+    var f = sheet.querySelectorAll('a[href],button:not([disabled])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+    else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+  });
+
+  /* ── Boot ─────────────────────────────────────────────────────────────── */
+  var initial = 'en';
+  var qs = new URLSearchParams(window.location.search).get('lang');
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+
+  if (qs === 'zh' || qs === 'en') {
+    initial = qs;
+  } else if (saved === 'zh' || saved === 'en') {
+    initial = saved;
+  } else if (/^zh\b/i.test(navigator.language || '')) {
+    // Shared in WeChat far more often than not, so a zh device gets zh first.
+    initial = 'zh';
+  }
+  applyLang(initial);
 })();

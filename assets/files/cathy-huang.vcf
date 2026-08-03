@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Huang;Cathy;;;
+FN:Cathy Huang
+ORG:Amazon Web Services
+TITLE:Automotive Solutions Architect
+EMAIL;type=INTERNET;type=WORK:raoyih@amazon.com
+URL:https://ryhcathy.github.io/
+NOTE:GenAI applications, GPU infrastructure and agentic AI at AWS. Exploring Personal AI products built around individual needs.
+END:VCARD

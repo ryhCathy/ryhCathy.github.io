@@ -1,233 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cathy Huang — Exploring Personal AI</title>
-<meta name="description" content="Cathy Huang. Solutions Architect at AWS. Exploring Personal AI, AI-native products, and AI hardware — the future form of an AI that truly knows you.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cathy Huang — Automotive Solutions Architect at AWS</title>
+<meta name="description" content="Cathy Huang — Automotive Solutions Architect at Amazon Web Services. GenAI applications, GPU infrastructure and agentic AI, plus Personal AI product exploration.">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="https://ryhcathy.github.io/">
 <link rel="alternate" hreflang="en" href="https://ryhcathy.github.io/?lang=en">
 <link rel="alternate" hreflang="zh" href="https://ryhcathy.github.io/?lang=zh">
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Cathy Huang — Exploring Personal AI">
-<meta property="og:description" content="Solutions Architect at AWS. Exploring Personal AI, AI-native products, and AI hardware.">
-<meta property="og:image" content="https://ryhcathy.github.io/assets/img/avatar_en.jpg">
+<!-- Share card: this page is meant to be sent in WeChat / LinkedIn DMs, so the
+     preview image is the portrait, not a logo. -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Cathy Huang — Automotive Solutions Architect at AWS">
+<meta property="og:description" content="GenAI applications, GPU infrastructure and agentic AI at AWS — and Personal AI products built around individual needs.">
+<meta property="og:image" content="https://ryhcathy.github.io/assets/img/share.jpg">
+<meta property="og:url" content="https://ryhcathy.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" as="image" href="assets/img/avatar_en.jpg">
+<link rel="preload" href="assets/fonts/is-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/is-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/card.css">
 </head>
-
 <body>
-<!-- Language switch. Both versions are one document: every [data-en]/[data-zh]
-     node swaps text, and the avatar video swaps source with it. -->
-<nav class="topbar">
-  <a class="mark" href="#top" aria-label="Cathy Huang">CH</a>
-  <div class="lang" role="group" aria-label="Language">
-    <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
-    <span class="sep">/</span>
-    <button type="button" data-set-lang="zh" aria-pressed="false">中文</button>
-  </div>
-</nav>
 
-<main id="top">
+<a class="skip" href="#main" data-en="Skip to content" data-zh="跳到正文">Skip to content</a>
 
-  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+<header class="bar">
+  <span class="wordmark">Cathy Huang</span>
+  <nav class="lang" aria-label="Language">
+    <button type="button" class="lang-btn" data-lang="zh" lang="zh-CN">中文</button>
+    <span class="lang-sep" aria-hidden="true">/</span>
+    <button type="button" class="lang-btn is-on" data-lang="en" lang="en">EN</button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ── Hero: the whole card in one screen ─────────────────────────────── -->
   <section class="hero">
-    <div class="hero-grid">
 
-      <!-- The avatar is the visual centre: her AI double gives the first
-           self-introduction. Poster = frame 0 of the same clip, so pressing
-           play looks like the still simply comes alive. -->
-      <figure class="avatar" id="avatar">
-        <video id="clip"
-               poster="assets/img/avatar_en.jpg"
-               preload="metadata"
-               playsinline
-               data-src-en="assets/video/cathy_en.mp4"
-               data-src-zh="assets/video/cathy_zh.mp4">
-          <source src="assets/video/cathy_en.mp4" type="video/mp4">
-        </video>
-
-        <!-- The label lives in its own span: the language switch rewrites
-             textContent, which would otherwise wipe out the icon. -->
-        <button class="play" id="play" type="button" aria-label="Play introduction">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-          <span class="play-label" data-en="Play introduction" data-zh="播放自我介绍"></span>
+    <!-- Portrait first in the DOM so mobile leads with the face — the fastest
+         possible "who is this". On desktop, grid moves it to the right. -->
+    <figure class="twin" id="twin">
+      <div class="twin-frame">
+        <img class="twin-poster" src="assets/img/poster.jpg" alt="Cathy Huang" width="896" height="1536" fetchpriority="high" decoding="async">
+        <video class="twin-video" playsinline preload="none" width="448" height="768"
+               data-src-en="assets/video/twin_en.mp4"
+               data-src-zh="assets/video/twin_zh.mp4"></video>
+        <button type="button" class="twin-play" aria-describedby="twin-note">
+          <span class="twin-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span class="twin-label" data-en="Watch AI Twin (0:14)" data-zh="看看 AI 分身（0:11）">Watch AI Twin (0:14)</span>
         </button>
-
-        <figcaption class="avatar-note">
-          <span data-en="AI avatar · my voice, cloned"
-                data-zh="AI 数字分身 · 我的克隆声音"></span>
-        </figcaption>
-
-        <!-- Shown while playing: the clip is unmuted, but a muted device isn't. -->
-        <div class="sound-hint" id="soundHint" role="status" aria-live="polite">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h3l4-3.5v13L7 15H4zm11.5-1.6a5 5 0 010 9.2m2.4-11.8a8 8 0 010 14.4"/></svg>
-          <span data-en="Sound on for the full introduction"
-                data-zh="记得打开声音，听听我的声音"></span>
-        </div>
-      </figure>
-
-      <div class="hero-copy">
-        <p class="eyebrow"
-           data-en="Personal AI · AI Native · AI Hardware"
-           data-zh="Personal AI · AI 原生产品 · AI 硬件"></p>
-
-        <h1 data-en="I'm exploring what Personal AI becomes."
-            data-zh="我在探索 Personal AI 的下一种形态。"></h1>
-
-        <p class="lede"
-           data-en="An AI that actually knows you — not another chat window. I'm Cathy: by day a Solutions Architect at AWS taking AI systems to production scale, and in my own time a builder chasing that question through products, agents, and hardware."
-           data-zh="一个真正懂你的 AI，而不是又一个聊天窗口。我是 Cathy —— 白天在 AWS 做解决方案架构师，把 AI 系统推上生产规模；其余时间，我用产品、Agent 和硬件去回答这个问题。"></p>
-
-        <div class="cta">
-          <a class="btn primary" href="mailto:raoyih@amazon.com"
-             data-en="Let's build something" data-zh="聊聊合作"></a>
-          <a class="btn ghost" href="#explore"
-             data-en="What I'm exploring" data-zh="我正在探索什么"></a>
-        </div>
-
-        <p class="signal">
-          <span data-en="Currently at" data-zh="现任"></span>
-          <strong>Amazon Web Services</strong>
-          <span class="dot">·</span>
-          <span data-en="Solutions Architect, Automotive &amp; GenAI"
-                data-zh="解决方案架构师，汽车 &amp; 生成式 AI"></span>
-        </p>
+        <span class="twin-sound" hidden data-en="Sound on" data-zh="已开启声音">Sound on</span>
       </div>
-    </div>
-  </section>
+      <figcaption id="twin-note" data-en="AI-generated video · my own cloned voice" data-zh="视频由 AI 生成 · 声音是我本人的">AI-generated video · my own cloned voice</figcaption>
+    </figure>
 
-  <!-- ── The three directions (the point of the whole page) ─────────────── -->
-  <section id="explore" class="explore">
-    <header class="sec-head">
-      <p class="kicker" data-en="Where I'm heading" data-zh="我要去的方向"></p>
-      <h2 data-en="Three questions I keep coming back to"
-          data-zh="三个我一直在想的问题"></h2>
-    </header>
+    <div class="idn">
+      <p class="eyebrow" data-en="Solutions Architect" data-zh="解决方案架构师">Solutions Architect</p>
+      <h1>Cathy Huang</h1>
+      <p class="role" data-en="Automotive Solutions Architect at Amazon Web Services" data-zh="Amazon Web Services 汽车行业解决方案架构师">Automotive Solutions Architect at Amazon Web Services</p>
+      <p class="lede" data-en="I design and validate GenAI applications, GPU infrastructure, and agentic AI architectures for automotive customers at AWS — while exploring Personal AI products built around individual needs." data-zh="我在 AWS 为汽车行业客户设计并验证的生成式 AI 应用、GPU 基础设施与 Agentic AI 架构；同时探索真正围绕个人需求构建的 Personal AI 产品新形态。">I design and validate GenAI applications, GPU infrastructure, and agentic AI architectures for automotive customers at AWS — while exploring Personal AI products built around individual needs.</p>
 
-    <div class="cards">
-      <article class="card">
-        <span class="num">01</span>
-        <h3 data-en="Personal AI" data-zh="Personal AI"></h3>
-        <p data-en="What does it take for an AI to hold your context for years — your taste, your history, your intent — and stay yours? Memory, privacy, and ownership are the hard parts, not the model."
-           data-zh="一个 AI 要如何长年持有你的上下文 —— 你的偏好、你的经历、你的意图 —— 并且始终属于你？难点从来不是模型，而是记忆、隐私和归属权。"></p>
-      </article>
+      <!-- Two labels per item: the full name has nowhere to go on a 390px screen,
+           and letting it wrap orphaned the "·" separator onto its own line. Short
+           forms on phones, full names from tablet up. -->
+      <ul class="proof">
+        <li><b>AWS</b></li>
+        <li>
+          <span class="pf-full" data-en="Carnegie Mellon University" data-zh="卡内基梅隆大学">Carnegie Mellon University</span>
+          <span class="pf-short">CMU</span>
+        </li>
+        <li>
+          <span class="pf-full" data-en="Published at ACM CHI" data-zh="ACM CHI 论文发表">Published at ACM CHI</span>
+          <span class="pf-short">ACM CHI</span>
+        </li>
+      </ul>
 
-      <article class="card">
-        <span class="num">02</span>
-        <h3 data-en="AI Native Products" data-zh="AI 原生产品"></h3>
-        <p data-en="Products designed from the model outward instead of AI bolted onto old flows. When generation is cheap and reasoning is a primitive, the interface, the pricing, and the unit of work all change shape."
-           data-zh="从模型出发去设计产品，而不是把 AI 塞进旧流程。当生成变得廉价、推理成为基础能力，交互方式、定价逻辑和工作的最小单元都会改变形状。"></p>
-      </article>
-
-      <article class="card">
-        <span class="num">03</span>
-        <h3 data-en="AI Hardware" data-zh="AI 硬件"></h3>
-        <p data-en="Personal AI has to live somewhere. Which device earns a place in your day — what it senses, what it never sends to the cloud, and how it feels to carry."
-           data-zh="Personal AI 总要有一个载体。什么样的设备值得进入你的日常 —— 它感知什么、什么永远不上云、以及戴在身上是什么感觉。"></p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ── Proof that ideas ship: the page demos its own build ────────────── -->
-  <section class="build">
-    <div class="build-grid">
-      <div class="build-copy">
-        <p class="kicker" data-en="Built, not sketched" data-zh="不是设想，是做出来的"></p>
-        <h2 data-en="The avatar above is my own pipeline."
-            data-zh="上面那个数字分身，是我自己搭的。"></h2>
-        <p data-en="Text goes in, a talking-head video comes out in my cloned voice — voice cloning, a diffusion talking-head model, and denoising, running on a GPU cluster I provision on demand and tear down when it's idle. One command, about fifteen minutes, roughly a dollar."
-           data-zh="输入一段文本，输出一条用我克隆声音说话的视频 —— 声音克隆、扩散式口播模型、降噪，跑在我自己按需拉起、空闲即回收的 GPU 集群上。一条命令，约十五分钟，成本大约一美元。"></p>
-        <p class="fine" data-en="That's the pattern I care about: an idea is only interesting once it runs."
-           data-zh="这就是我在意的事：一个想法，只有跑起来才算有意思。"></p>
+      <!-- Save Contact is the page's primary job: this is a business card, and a
+           card that can't be kept has failed. It opens a sheet offering both a
+           scannable code and the .vcf, because neither route works everywhere. -->
+      <div class="acts">
+        <button type="button" class="act act-1 save-open" aria-haspopup="dialog">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>
+          <span data-en="Save Contact" data-zh="保存联系人">Save Contact</span>
+        </button>
+        <a class="act" id="li" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.98 3.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM3 9h4v12H3zM10 9h3.8v1.7h.05A4.2 4.2 0 0117.6 8.7c3 0 3.4 1.9 3.4 4.5V21h-4v-6.4c0-1.5-.3-2.6-1.8-2.6s-2 1.1-2 2.5V21h-3.9z" stroke="none" fill="currentColor"/></svg>
+          <span>LinkedIn</span>
+        </a>
+        <a class="act" href="mailto:raoyih@amazon.com">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+          <span data-en="Email" data-zh="邮件">Email</span>
+        </a>
+        <a class="act" id="gh" href="https://github.com/ryhCathy" target="_blank" rel="noopener">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z" stroke="none" fill="currentColor"/></svg>
+          <span>GitHub</span>
+        </a>
       </div>
 
-      <ul class="stack">
-        <li><span data-en="Voice" data-zh="声音"></span><strong>CosyVoice 3 · zero-shot clone</strong></li>
-        <li><span data-en="Avatar" data-zh="口播"></span><strong>SoulX-FlashTalk 14B</strong></li>
-        <li><span data-en="Compute" data-zh="算力"></span><strong>EKS · Karpenter · on-demand GPU</strong></li>
-        <li><span data-en="Storage" data-zh="存储"></span><strong>EFS · shared model cache</strong></li>
-        <li><span data-en="Entry point" data-zh="入口"></span><strong><code>./make_video.sh "…"</code></strong></li>
+      <ul class="chips">
+        <li data-en="Generative AI" data-zh="生成式 AI">Generative AI</li>
+        <li data-en="GPU &amp; Kubernetes" data-zh="GPU 与 Kubernetes">GPU &amp; Kubernetes</li>
+        <li data-en="Automotive AI" data-zh="汽车行业 AI">Automotive AI</li>
+        <li data-en="Personal AI Products" data-zh="Personal AI 产品">Personal AI Products</li>
       </ul>
     </div>
   </section>
 
-  <!-- ── Credibility: present, but deliberately not the headline ────────── -->
-  <section class="credibility">
-    <header class="sec-head">
-      <p class="kicker" data-en="Track record" data-zh="背景"></p>
-      <h2 data-en="Why I can actually ship this"
-          data-zh="为什么这些我做得出来"></h2>
-      <p class="sec-sub"
-         data-en="My day job puts me at the frontier of AI infrastructure — that's exactly what makes the personal work possible."
-         data-zh="本职工作让我长期待在 AI 基础设施的前沿 —— 也正因为如此，个人探索才有落地的能力。"></p>
-    </header>
+  <!-- ── Three cards: advantage / doing / exploring ──────────────────────
+       Not numbered — these are three simultaneous facets, not a sequence. -->
+  <section class="triad" aria-label="Focus">
+    <article class="card">
+      <h2 data-en="My Advantage" data-zh="我的优势">My Advantage</h2>
+      <p data-en="I combine AI infrastructure expertise with product thinking — bridging deep technical depth and real customer impact." data-zh="我把 AI 基础设施的工程能力和产品思维结合起来 —— 既能深入技术细节，也对客户业务负责。">I combine AI infrastructure expertise with product thinking — bridging deep technical depth and real customer impact.</p>
+    </article>
+    <article class="card">
+      <h2 data-en="What I Do" data-zh="我在做什么">What I Do</h2>
+      <p data-en="I build cloud solutions for automotive workloads like smart cockpit, autonomous driving data loops, connected vehicles, and embodied intelligence." data-zh="我为汽车行业客户构建并规模化云上解决方案，支持智能座舱、自动驾驶数据闭环、车联网、具身智能等领域。">I build cloud solutions for automotive workloads like smart cockpit, autonomous driving data loops, connected vehicles, and embodied intelligence.</p>
+    </article>
+    <article class="card">
+      <h2 data-en="What I Explore" data-zh="我在探索什么">What I Explore</h2>
+      <p data-en="I explore Personal AI, AI-native products, and hardware experiences that make individuals meaningfully more capable." data-zh="我探索 Personal AI、AI 原生产品，以及真正让个人能力增强的软硬件形态。">I explore Personal AI, AI-native products, and hardware experiences that make individuals meaningfully more capable.</p>
+    </article>
+  </section>
 
-    <div class="cred-grid">
-      <div class="cred-block">
-        <h3 data-en="Now" data-zh="现在"></h3>
-        <p class="role">Solutions Architect · Amazon Web Services</p>
-        <p data-en="Automotive &amp; GenAI. I take AI workloads from proof of concept to production: sizing and autoscaling GPU clusters, tuning LLM serving (vLLM · SGLang · TensorRT-LLM · KV cache), ADAS data loops, and agentic AI platforms for OEMs, Tier-1s, and ISVs."
-           data-zh="汽车与生成式 AI 方向。把 AI 负载从 PoC 推到生产：GPU 集群选型与弹性伸缩、LLM 推理优化（vLLM · SGLang · TensorRT-LLM · KV cache）、ADAS 数据闭环，以及面向主机厂、Tier-1 和 ISV 的 Agentic AI 平台。"></p>
-      </div>
-
-      <div class="cred-block">
-        <h3 data-en="Before" data-zh="此前"></h3>
-        <p class="role">Carnegie Mellon University</p>
-        <p data-en="M.S. Information Systems Management, Highest Distinction."
-           data-zh="信息系统管理硕士，最高荣誉（Highest Distinction）。"></p>
-        <p class="role">The Hong Kong Polytechnic University</p>
-        <p data-en="B.Sc. Computing, First-Class Honours. Exchanges at NUS and the University of Cambridge."
-           data-zh="计算学理学士，一级荣誉。曾赴新加坡国立大学与剑桥大学交换。"></p>
-      </div>
-
-      <div class="cred-block">
-        <h3 data-en="Research" data-zh="研究"></h3>
-        <ul class="pubs">
-          <li>
-            <a href="https://dl.acm.org/doi/10.1145/3706598.3713339" target="_blank" rel="noopener">JournalAIde: Empowering Older Adults in Digital Journal Writing</a>
-            <span class="venue">ACM CHI 2025</span>
-          </li>
-          <li>
-            <a href="https://aclanthology.org/2023.artofsafety-1.4/" target="_blank" rel="noopener">Measuring Adversarial Datasets</a>
-            <span class="venue">ART of Safety @ AACL-IJCNLP 2023 · <span data-en="co-first author" data-zh="共同第一作者"></span></span>
-          </li>
-        </ul>
-        <!-- Carried over from the previous site so the CV stays reachable. -->
-        <p class="cv">
-          <a href="assets/files/curriculum_vitae.pdf" target="_blank" rel="noopener"
-             data-en="Full CV (PDF)" data-zh="完整履历（PDF）"></a>
-        </p>
-      </div>
+  <!-- ── Credibility: supporting, deliberately not expanded ──────────────── -->
+  <section class="cred">
+    <div class="cred-col">
+      <h2 class="cred-h" data-en="Background" data-zh="背景">Background</h2>
+      <ul class="bg">
+        <li>
+          <span class="bg-d" data-en="M.S. Information Systems Management" data-zh="信息系统管理硕士">M.S. Information Systems Management</span>
+          <span class="bg-m" data-en="Carnegie Mellon University · Highest Distinction" data-zh="卡内基梅隆大学 · 最高荣誉">Carnegie Mellon University · Highest Distinction</span>
+        </li>
+        <li>
+          <span class="bg-d" data-en="B.Sc. Computing" data-zh="计算学理学士">B.Sc. Computing</span>
+          <span class="bg-m" data-en="The Hong Kong Polytechnic University · First-Class Honours" data-zh="香港理工大学 · 一级荣誉">The Hong Kong Polytechnic University · First-Class Honours</span>
+        </li>
+        <li>
+          <span class="bg-m" data-en="Exchanges: NUS · University of Cambridge" data-zh="交换：新加坡国立大学 · 剑桥大学">Exchanges: NUS · University of Cambridge</span>
+        </li>
+      </ul>
+    </div>
+    <div class="cred-col">
+      <h2 class="cred-h" data-en="Selected Publications" data-zh="代表论文">Selected Publications</h2>
+      <ul class="pubs">
+        <li>
+          <a href="https://dl.acm.org/doi/10.1145/3706598.3713339" target="_blank" rel="noopener">JournalAIde: Empowering Older Adults in Digital Journal Writing</a>
+          <span class="venue">ACM CHI 2025</span>
+        </li>
+        <li>
+          <a href="https://aclanthology.org/2023.artofsafety-1.4/" target="_blank" rel="noopener">Measuring Adversarial Datasets</a>
+          <span class="venue" data-en="ART of Safety @ AACL-IJCNLP 2023 · Co-first author" data-zh="ART of Safety @ AACL-IJCNLP 2023 · 共同第一作者">ART of Safety @ AACL-IJCNLP 2023 · Co-first author</span>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- ── Contact ────────────────────────────────────────────────────────── -->
-  <section class="contact">
-    <h2 data-en="Come find me if you're working on…"
-        data-zh="如果你在做这些，来找我聊"></h2>
-    <ul class="tags">
-      <li data-en="Personal AI" data-zh="Personal AI"></li>
-      <li data-en="AI-native products" data-zh="AI 原生产品"></li>
-      <li data-en="AI agents" data-zh="AI Agent"></li>
-      <li data-en="AI hardware" data-zh="AI 硬件"></li>
-      <li data-en="GPU infrastructure" data-zh="GPU 基础设施"></li>
-    </ul>
-    <a class="btn primary big" href="mailto:raoyih@amazon.com">raoyih@amazon.com</a>
-    <p class="fine" data-en="Ideas welcome, half-formed ones especially."
-       data-zh="想法欢迎，尤其是还没想清楚的那种。"></p>
+  <!-- ── Close ───────────────────────────────────────────────────────────── -->
+  <section class="cta">
+    <p class="cta-t" data-en="Open to conversations on Personal AI, AI-native products, agent systems, AI infrastructure, and automotive AI." data-zh="欢迎就 Personal AI、AI 原生产品、Agent 系统、AI 基础设施与汽车行业 AI 交流。">Open to conversations on Personal AI, AI-native products, agent systems, AI infrastructure, and automotive AI.</p>
+    <div class="cta-acts">
+      <button type="button" class="act act-1 save-open" aria-haspopup="dialog">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>
+        <span data-en="Save Contact" data-zh="保存联系人">Save Contact</span>
+      </button>
+      <a class="act" href="mailto:raoyih@amazon.com">raoyih@amazon.com</a>
+    </div>
   </section>
 </main>
 
-<footer>
-  <span>© <span id="year"></span> Cathy Huang</span>
-  <span class="fine" data-en="Opinions my own." data-zh="观点仅代表个人。"></span>
+<footer class="foot">
+  <span>© 2026 Cathy Huang</span>
+  <span data-en="Views are my own" data-zh="观点仅代表个人">Views are my own</span>
 </footer>
 
-<script src="assets/js/card.js"></script>
+<!-- ── Save Contact sheet ────────────────────────────────────────────────────
+     Two ways to keep the card, because neither works everywhere: the code is for
+     someone holding a second phone, and for WeChat's in-app browser where file
+     downloads are blocked; the .vcf is for whoever is already on the device. -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-veil" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
+    <button type="button" class="sheet-x" data-close aria-label="Close" data-label-en="Close" data-label-zh="关闭">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h2 class="sheet-h" id="sheet-h" data-en="Save Contact" data-zh="保存联系人">Save Contact</h2>
+    <p class="sheet-p" data-en="Point a phone camera at the code to add me to your contacts." data-zh="用手机相机扫一下，即可把我存进通讯录。">Point a phone camera at the code to add me to your contacts.</p>
+    <div class="sheet-qr">
+      <img src="assets/img/vcard-qr.svg" alt="" aria-hidden="true" width="200" height="200">
+    </div>
+    <dl class="sheet-vc">
+      <div><dt data-en="Name" data-zh="姓名">Name</dt><dd>Cathy Huang</dd></div>
+      <div><dt data-en="Role" data-zh="职位">Role</dt><dd data-en="Solutions Architect · Amazon Web Services" data-zh="解决方案架构师 · Amazon Web Services">Solutions Architect · Amazon Web Services</dd></div>
+      <div><dt data-en="Email" data-zh="邮箱">Email</dt><dd><a href="mailto:raoyih@amazon.com">raoyih@amazon.com</a></dd></div>
+    </dl>
+    <a class="sheet-dl" href="assets/files/cathy-huang.vcf" download="cathy-huang.vcf">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>
+      <span data-en="Download vCard (.vcf)" data-zh="下载 vCard（.vcf）">Download vCard (.vcf)</span>
+    </a>
+    <p class="sheet-note" data-en="In WeChat, downloads are blocked — scan the code instead." data-zh="微信内不支持下载文件，请直接扫码。">In WeChat, downloads are blocked — scan the code instead.</p>
+  </div>
+</div>
+
+<script src="assets/js/card.js" defer></script>
 </body>
 </html>

@@ -161,6 +161,65 @@
     else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
   });
 
+  /* ── Email fallback ───────────────────────────────────────────────────────
+     mailto: only works when the device has a default mail client — on a machine
+     that lives in webmail, or in WeChat's in-app browser, the click does
+     nothing. So every mailto link also copies the address and says so. The
+     mailto itself still fires: whoever has a client keeps the normal flow. */
+  var toast = null;
+  var toastTimer = null;
+
+  function showToast(msg) {
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'copy-toast';
+      toast.setAttribute('role', 'status');
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
+  }
+
+  // WeChat's WebView and older browsers: an off-screen textarea still works.
+  function copyViaTextarea(text) {
+    return new Promise(function (resolve, reject) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+      ta.setAttribute('readonly', '');
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy') ? resolve() : reject(); }
+      catch (e) { reject(e); }
+      document.body.removeChild(ta);
+    });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      // The async API can reject on permissions where the textarea path still
+      // succeeds, so it's a fallback, not an either/or.
+      return navigator.clipboard.writeText(text)
+        .catch(function () { return copyViaTextarea(text); });
+    }
+    return copyViaTextarea(text);
+  }
+
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var addr = a.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+      copyText(addr).then(function () {
+        showToast(lang === 'zh' ? '已复制邮箱：' + addr : 'Email copied: ' + addr);
+      }).catch(function () {
+        // Clipboard refused (permissions, ancient browser): show the address
+        // itself, which is still more useful than silence.
+        showToast(addr);
+      });
+    });
+  });
+
   /* ── Boot ─────────────────────────────────────────────────────────────── */
   var initial = 'en';
   var qs = new URLSearchParams(window.location.search).get('lang');

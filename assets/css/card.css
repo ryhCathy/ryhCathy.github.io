@@ -211,6 +211,19 @@ h1{font-size:clamp(34px,10vw,46px);color:var(--navy-deep);letter-spacing:-.032em
   margin-top:28px;padding:18px var(--gut) calc(26px + env(safe-area-inset-bottom));
   border-top:1px solid var(--line);font-size:12px;color:var(--ink-3)}
 
+/* ── Copy toast ───────────────────────────────────────────────────────────────
+   Confirms the email address landed on the clipboard — mailto: alone does
+   nothing on devices without a mail client. z-index above the sheet, since the
+   sheet also carries a mailto link. */
+.copy-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));
+  transform:translate(-50%,8px);z-index:60;max-width:calc(100vw - 2*var(--gut));
+  padding:10px 16px;border-radius:999px;background:rgba(10,31,61,.92);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.005em;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease}
+.copy-toast.is-on{opacity:1;transform:translate(-50%,0)}
+
 /* ── Save Contact sheet ───────────────────────────────────────────────────────
    A bottom sheet on the phone and a centred dialog from tablet up — the two
    shapes people already expect on each. */
